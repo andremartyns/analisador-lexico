@@ -6,6 +6,7 @@
 // Definindo os tipos de tokens
 enum TokenType {
     NUMBER,   // 0 a 9
+    LETTER,   // a a z e A a Z
     ADD,      // +
     SUBTRACT, // -
     MULTIPLY, // *
@@ -175,6 +176,13 @@ Token getNextToken() {
                     ch = getNextChar();
                 } while (isdigit(ch));
                 ungetChar();
+            } else if (isalpha(ch)) {
+                token.type = LETTER;
+                do {
+                    token.value[i++] = ch;
+                    ch = getNextChar();
+                } while (isalpha(ch));
+                ungetChar();
             } else {
                 // Caractere inválido
                 printf("Caractere inválido: %c\n", ch);
@@ -196,6 +204,9 @@ int main() {
         switch (token.type) {
             case NUMBER:
                 printf("Número: %s\n", token.value);
+                break;
+            case LETTER:
+                printf("Letra: %s\n", token.value);
                 break;
             case ADD:
                 printf("Soma\n");
